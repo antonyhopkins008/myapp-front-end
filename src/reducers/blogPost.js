@@ -1,4 +1,4 @@
-import {BLOG_POST_ERROR, BLOG_POST_RECEIVE, BLOG_POST_REQUEST} from "../actions/constants";
+import {BLOG_POST_ERROR, BLOG_POST_RECEIVE, BLOG_POST_REQUEST, BLOG_POST_UNLOAD} from "../actions/constants";
 
 export default (state = {
     post: null,
@@ -17,6 +17,11 @@ export default (state = {
                 isFetching: false
             };
         case BLOG_POST_ERROR:
+            return {
+                ...state,
+                isFetching: false
+            };
+        case BLOG_POST_UNLOAD:
             return {
                 ...state,
                 post: null,

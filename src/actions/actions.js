@@ -7,6 +7,7 @@ import {
     BLOG_POST_LIST_REQUEST,
     BLOG_POST_RECEIVE,
     BLOG_POST_REQUEST,
+    BLOG_POST_UNLOAD,
 } from "./constants";
 
 export const blogPostListRequest = () => ({
@@ -29,6 +30,10 @@ export const blogPostError = (error) => ({
 });
 export const blogPostReceived = (data) => ({
     type: BLOG_POST_RECEIVE,
+    data
+});
+export const blogPostUnload = (data) => ({
+    type: BLOG_POST_UNLOAD,
     data
 });
 export const blogPostListFetch = () => {
