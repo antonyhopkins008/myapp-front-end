@@ -1,9 +1,13 @@
 import {requests} from "../agent";
 
-export const BLOG_POST_LIST_REQUEST = 'BLOG_POST_LIST_REQUEST';
-export const BLOG_POST_LIST_ADD = 'BLOG_POST_LIST_ADD';
-export const BLOG_POST_LIST_RECEIVE = 'BLOG_POST_LIST_RECEIVE';
-export const BLOG_POST_LIST_ERROR = 'BLOG_POST_LIST_ERROR';
+import {
+    BLOG_POST_ERROR,
+    BLOG_POST_LIST_ERROR,
+    BLOG_POST_LIST_RECEIVE,
+    BLOG_POST_LIST_REQUEST,
+    BLOG_POST_RECEIVE,
+    BLOG_POST_REQUEST,
+} from "./constants";
 
 export const blogPostListRequest = () => ({
     type: BLOG_POST_LIST_REQUEST,
@@ -16,7 +20,17 @@ export const blogPostListReceived = (data) => ({
     type: BLOG_POST_LIST_RECEIVE,
     data
 });
-
+export const blogPostRequest = () => ({
+    type: BLOG_POST_REQUEST,
+});
+export const blogPostError = (error) => ({
+    type: BLOG_POST_ERROR,
+    error
+});
+export const blogPostReceived = (data) => ({
+    type: BLOG_POST_RECEIVE,
+    data
+});
 export const blogPostListFetch = () => {
     return (dispatch) => {
         dispatch(blogPostListRequest());
@@ -27,11 +41,13 @@ export const blogPostListFetch = () => {
             .catch(error => dispatch(blogPostListError(error)));
     }
 };
+export const blogPostFetch = (id) => {
+    return (dispatch) => {
+        dispatch(blogPostRequest());
 
-export const blogPostListAdd = () => ({
-    type: BLOG_POST_LIST_ADD,
-    data: {
-        id: Math.floor(Math.random() * 100 + 3),
-        title: 'New blog post'
+        return requests
+            .get(`/blog_posts/${id}`)
+            .then(response => dispatch(blogPostReceived(response)))
+            .catch(error => dispatch(blogPostError(error)));
     }
-});
+};

@@ -3,6 +3,7 @@ import {Route, Switch} from "react-router";
 import LoginForm from "./LoginForm";
 import BlogPostListContainer from "./BlogPostListContainer";
 import Header from "./Header";
+import BlogPostContainer from "./BlogPostContainer";
 
 class App extends React.Component {
     render() {
@@ -11,7 +12,8 @@ class App extends React.Component {
                <Header/>
                 <Switch>
                     <Route path="/login" component={LoginForm}/>
-                    <Route path="/" component={BlogPostListContainer}/>
+                    <Route path="/blog-posts/:id" component={BlogPostContainer}/>
+                    <Route path="/" exact component={BlogPostListContainer}/>
                 </Switch>
             </div>);
     }

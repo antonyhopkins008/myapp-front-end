@@ -3,7 +3,7 @@ import {
     BLOG_POST_LIST_ERROR,
     BLOG_POST_LIST_RECEIVE,
     BLOG_POST_LIST_REQUEST
-} from "../actions/actions";
+} from "../actions/constants";
 
 export default (state = {
     posts: null,
@@ -33,8 +33,6 @@ export default (state = {
                 posts: state.posts ? state.posts.concat(action.data) : state.posts
             };
         default:
-            return {
-                state,
-            }
+            return {state}
     }
 }
