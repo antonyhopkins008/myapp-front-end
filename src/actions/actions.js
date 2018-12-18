@@ -7,9 +7,12 @@ import {
     BLOG_POST_LIST_REQUEST,
     BLOG_POST_RECEIVE,
     BLOG_POST_REQUEST,
-    BLOG_POST_UNLOAD,
+    BLOG_POST_UNLOAD, COMMENT_LIST_ERROR, COMMENT_LIST_RECEIVE, COMMENT_LIST_REQUEST, COMMENT_LIST_UNLOAD,
 } from "./constants";
 
+/**
+ * Blog post list
+ */
 export const blogPostListRequest = () => ({
     type: BLOG_POST_LIST_REQUEST,
 });
@@ -21,6 +24,20 @@ export const blogPostListReceived = (data) => ({
     type: BLOG_POST_LIST_RECEIVE,
     data
 });
+export const blogPostListFetch = () => {
+    return (dispatch) => {
+        dispatch(blogPostListRequest());
+
+        return requests
+            .get('/blog_posts')
+            .then(response => dispatch(blogPostListReceived(response)))
+            .catch(error => dispatch(blogPostListError(error)));
+    }
+};
+
+/**
+ * Blog post
+ */
 export const blogPostRequest = () => ({
     type: BLOG_POST_REQUEST,
 });
@@ -36,16 +53,6 @@ export const blogPostUnload = (data) => ({
     type: BLOG_POST_UNLOAD,
     data
 });
-export const blogPostListFetch = () => {
-    return (dispatch) => {
-        dispatch(blogPostListRequest());
-
-        return requests
-            .get('/blog_posts')
-            .then(response => dispatch(blogPostListReceived(response)))
-            .catch(error => dispatch(blogPostListError(error)));
-    }
-};
 export const blogPostFetch = (id) => {
     return (dispatch) => {
         dispatch(blogPostRequest());
@@ -54,5 +61,34 @@ export const blogPostFetch = (id) => {
             .get(`/blog_posts/${id}`)
             .then(response => dispatch(blogPostReceived(response)))
             .catch(error => dispatch(blogPostError(error)));
+    }
+};
+
+/**
+ * Blog post comment
+ */
+export const commentListRequest = () => ({
+    type: COMMENT_LIST_REQUEST,
+});
+export const commentListError = (error) => ({
+    type: COMMENT_LIST_ERROR,
+    error
+});
+export const commentListReceived = (data) => ({
+    type: COMMENT_LIST_RECEIVE,
+    data
+});
+export const commentListUnload = (data) => ({
+    type: COMMENT_LIST_UNLOAD,
+    data
+});
+export const commentListFetch = (id) => {
+    return (dispatch) => {
+        dispatch(commentListRequest());
+
+        return requests
+            .get(`/blog_posts/${id}/comments`)
+            .then(response => dispatch(commentListReceived(response)))
+            .catch(error => dispatch(commentListError(error)));
     }
 };

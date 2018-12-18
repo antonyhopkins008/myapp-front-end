@@ -28,6 +28,6 @@ export default (state = {
                 isFetching: false
             };
         default:
-            return {state}
+            return state
     }
 }

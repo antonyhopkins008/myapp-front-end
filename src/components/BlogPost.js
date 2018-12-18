@@ -6,7 +6,7 @@ import Message from "./Message";
 export default class BlogPost extends React.Component {
     render() {
         const {post} = this.props;
-
+        console.log(post);
         if (null == post || 0 === post.length) {
             return (<Message message="Blog was not found"/>);
         }
