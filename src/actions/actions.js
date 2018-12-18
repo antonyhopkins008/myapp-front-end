@@ -101,16 +101,16 @@ export const commentListFetch = (id) => {
 export const userLoginSuccess = (token, userId) => {
     return {
         type: USER_LOGIN_SUCCESS,
-        token,
-        userId
+        token
+        // userId
     }
 };
 
 export const userLoginAttempt = (username, password) => {
     return (dispatch) => {
         return requests
-            .post('/login_check', {username, password})
-            .then(response => userLoginSuccess(response.token, response.id))
-            .catch(error => console.log(error));
+            .post('/login_check', {username, password}, false)
+            .then(response => dispatch(userLoginSuccess(response.token)))
+            .catch(error => console.log(error, 'Error'));
     }
 };

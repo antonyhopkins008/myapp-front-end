@@ -16,7 +16,6 @@ export default (state = {
                 isFetching: true
             };
         case COMMENT_LIST_RECEIVE:
-            // console.log(action.data['hydra:member'],  'data');
             return {
                 ...state,
                 comments: action.data['hydra:member'],
