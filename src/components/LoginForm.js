@@ -1,9 +1,35 @@
 import React from 'react';
+import {Field, reduxForm} from 'redux-form';
+import {renderField} from "../form";
+import {connect} from "react-redux";
+import {userLoginAttempt} from "../actions/actions";
+
+const mapDispatchToProps = {
+    userLoginAttempt
+};
 
 class LoginForm extends React.Component {
+    onSubmit(values) {
+        return this.props.userLoginAttempt(
+            values.username,
+            values.password
+        )
+    }
+
     render() {
-        return (<div>Login</div>);
+        const {handleSubmit} = this.props;
+        return (
+            <div className="text-center">
+                <form className="mt-4" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+                    <Field name="username" label="User name" type="text" component={renderField}/>
+                    <Field name="password" label="Password" type="password" component={renderField}/>
+                    <button type="submit" className="btn btn-primary btn-big btn-block">Login</button>
+                </form>
+            </div>
+        );
     }
 }
 
-export default LoginForm;
+export default reduxForm({
+    form: 'LoginForm'
+})(connect(null, mapDispatchToProps)(LoginForm));
