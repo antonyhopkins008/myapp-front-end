@@ -16,6 +16,7 @@ import {
     USER_PROFILE_ERROR,
     USER_PROFILE_RECEIVED,
     USER_PROFILE_REQUEST,
+    USER_SET_ID,
 } from "./constants";
 import {SubmissionError} from "redux-form";
 
@@ -49,14 +50,17 @@ export const blogPostListFetch = () => {
 export const blogPostRequest = () => ({
     type: BLOG_POST_REQUEST,
 });
+
 export const blogPostError = (error) => ({
     type: BLOG_POST_ERROR,
     error
 });
+
 export const blogPostReceived = (data) => ({
     type: BLOG_POST_RECEIVE,
     data
 });
+
 export const blogPostUnload = (data) => ({
     type: BLOG_POST_UNLOAD,
     data
@@ -78,18 +82,22 @@ export const blogPostFetch = (id) => {
 export const commentListRequest = () => ({
     type: COMMENT_LIST_REQUEST,
 });
+
 export const commentListError = (error) => ({
     type: COMMENT_LIST_ERROR,
     error
 });
+
 export const commentListReceived = (data) => ({
     type: COMMENT_LIST_RECEIVE,
     data
 });
+
 export const commentListUnload = (data) => ({
     type: COMMENT_LIST_UNLOAD,
     data
 });
+
 export const commentListFetch = (id) => {
     return (dispatch) => {
         dispatch(commentListRequest());
@@ -121,6 +129,13 @@ export const userLoginAttempt = (username, password) => {
     }
 };
 
+export const userSetId = (userId) => {
+    return {
+        type: USER_SET_ID,
+        userId
+    }
+};
+
 export const userProfileRequest = () => {
     return {
         type: USER_PROFILE_REQUEST,
@@ -133,11 +148,11 @@ export const userProfileError = () => {
     }
 };
 
-export const userProfileReceived = (userData) => {
-    console.log(userData);
+export const userProfileReceived = (userId, userData) => {
     return {
         type: USER_PROFILE_RECEIVED,
-        userData
+        userData,
+        userId
     }
 };
 
@@ -146,7 +161,7 @@ export const userProfileFetch = (userId) => {
         dispatch(userProfileRequest());
         return requests
             .get(`/users/${userId}`, true)
-            .then(response => dispatch(userProfileReceived(response)))
+            .then(response => dispatch(userProfileReceived(userId, response)))
             .catch(error => dispatch(userProfileError(error)))
     }
 };
