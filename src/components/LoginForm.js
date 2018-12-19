@@ -28,7 +28,7 @@ class LoginForm extends React.Component {
 
     render() {
         const {handleSubmit, error} = this.props;
-         
+
         return (
             <div className="text-center">
                 {error && <div className="alert alert-danger">{error}</div>}

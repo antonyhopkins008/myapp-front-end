@@ -19,7 +19,6 @@ class BlogPostListContainer extends React.Component {
 
     render() {
         const {posts, isFetching} = this.props;
-
         if (isFetching) {
             return (<Spinner/>);
         }

@@ -7,7 +7,7 @@ import {
 
 export default (state = {
     posts: null,
-    isFetching: false
+    isFetching: true
 }, action) => {
     switch (action.type) {
         case BLOG_POST_LIST_REQUEST:
@@ -33,6 +33,6 @@ export default (state = {
                 posts: state.posts ? state.posts.concat(action.data) : state.posts
             };
         default:
-            return {state}
+            return state
     }
 }
