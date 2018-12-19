@@ -26,14 +26,17 @@ import {SubmissionError} from "redux-form";
 export const blogPostListRequest = () => ({
     type: BLOG_POST_LIST_REQUEST,
 });
+
 export const blogPostListError = (error) => ({
     type: BLOG_POST_LIST_ERROR,
     error
 });
+
 export const blogPostListReceived = (data) => ({
     type: BLOG_POST_LIST_RECEIVE,
     data
 });
+
 export const blogPostListFetch = () => {
     return (dispatch) => {
         dispatch(blogPostListRequest());
@@ -65,6 +68,7 @@ export const blogPostUnload = (data) => ({
     type: BLOG_POST_UNLOAD,
     data
 });
+
 export const blogPostFetch = (id) => {
     return (dispatch) => {
         dispatch(blogPostRequest());
