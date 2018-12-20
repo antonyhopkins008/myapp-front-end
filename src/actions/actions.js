@@ -13,7 +13,7 @@ import {
     COMMENT_LIST_RECEIVE,
     COMMENT_LIST_REQUEST,
     COMMENT_LIST_UNLOAD,
-    USER_LOGIN_SUCCESS,
+    USER_LOGIN_SUCCESS, USER_LOGOUT,
     USER_PROFILE_ERROR,
     USER_PROFILE_RECEIVED,
     USER_PROFILE_REQUEST,
@@ -132,6 +132,12 @@ export const commentAdd = (comment, blogPostId) => {
             .catch(error => {
                 throw new SubmissionError(parseApiErrors(error.response))
             })
+    }
+};
+
+export const userLogout = () => {
+    return {
+        type: USER_LOGOUT
     }
 };
 

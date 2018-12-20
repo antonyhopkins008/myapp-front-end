@@ -1,4 +1,4 @@
-import {USER_LOGIN_SUCCESS, USER_PROFILE_RECEIVED, USER_SET_ID} from "../actions/constants";
+import {USER_LOGIN_SUCCESS, USER_LOGOUT, USER_PROFILE_RECEIVED, USER_SET_ID} from "../actions/constants";
 
 export default (state = {
     token: null,
@@ -28,6 +28,13 @@ export default (state = {
                         ? action.userData
                         : state.userData,
                 isAuthenticated: state.userId === action.userId && state.userData === null
+            };
+        case USER_LOGOUT:
+            return {
+                ...state,
+                token: null,
+                isAuthenticated: false,
+                userData: null
             };
         default:
             return state
