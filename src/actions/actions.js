@@ -8,6 +8,7 @@ import {
     BLOG_POST_RECEIVE,
     BLOG_POST_REQUEST,
     BLOG_POST_UNLOAD,
+    COMMENT_ADDED,
     COMMENT_LIST_ERROR,
     COMMENT_LIST_RECEIVE,
     COMMENT_LIST_REQUEST,
@@ -19,6 +20,7 @@ import {
     USER_SET_ID,
 } from "./constants";
 import {SubmissionError} from "redux-form";
+import {parseApiErrors} from "../apiUtils";
 
 /**
  * Blog post list
@@ -109,6 +111,27 @@ export const commentListFetch = (id) => {
             .get(`/blog_posts/${id}/comments`)
             .then(response => dispatch(commentListReceived(response)))
             .catch(error => dispatch(commentListError(error)));
+    }
+};
+
+export const commentAdded = (comment) => ({
+    type: COMMENT_ADDED,
+    comment
+});
+
+export const commentAdd = (comment, blogPostId) => {
+    return (dispatch) => {
+        return requests
+            .post(
+                '/comments',
+                {
+                    content: comment,
+                    blogPost: `/api/blog_posts/${blogPostId}`
+                }
+            ).then(response => dispatch(commentAdded(response)))
+            .catch(error => {
+                throw new SubmissionError(parseApiErrors(error.response))
+            })
     }
 };
 
