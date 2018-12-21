@@ -18,7 +18,6 @@ class RegisterForm extends React.Component {
     }
 
     onSubmit(values) {
-        console.log(...Object.values(values));
         return this.props.userRegister(...Object.values(values))
             .then(() => {
                 this.props.reset();
@@ -26,7 +25,6 @@ class RegisterForm extends React.Component {
     }
 
     onTermsAcceptedClick(e) {
-        console.log(this.state);
         this.setState((prevState) => ({termsAccepted: !prevState.termsAccepted}))
     }
 

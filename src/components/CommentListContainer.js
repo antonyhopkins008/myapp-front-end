@@ -27,7 +27,6 @@ class CommentListContainer extends React.Component {
 
     onLoadMoreClick(){
         const {blogPostId, currentPage, commentListFetch} = this.props;
-        console.log('clcikc');
         commentListFetch(blogPostId, currentPage);
     }
 
