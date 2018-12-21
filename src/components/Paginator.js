@@ -7,18 +7,18 @@ export class Paginator extends React.Component {
         const {pageCount} = this.props;
         this.range = [];
 
-        for (let i = 1; i < pageCount; i++) {
+        for (let i = 1; i <= pageCount; i++) {
             this.range.push(i)
         }
 
     }
     render() {
-        const {currentPage, setPage} = this.props;
+        const {currentPage, setPage, prevPage, nextPage} = this.props;
         return (
             <nav>
                 <ul className="pagination">
                     <li className="page-item">
-                        <button className="page-link">
+                        <button className="page-link" onClick={prevPage}>
                             Previous
                         </button>
                     </li>
@@ -38,7 +38,7 @@ export class Paginator extends React.Component {
                         })
                     }
                     <li className="page-item">
-                        <button className="page-link">
+                        <button className="page-link" onClick={nextPage}>
                            Next
                         </button>
                     </li>

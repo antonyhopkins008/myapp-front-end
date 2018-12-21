@@ -5,6 +5,7 @@ import {
     BLOG_POST_LIST_REQUEST,
     BLOG_POST_LIST_SET_PAGE
 } from "../actions/constants";
+import {pageCount} from "../apiUtils";
 
 export default (state = {
     posts: null,
@@ -22,6 +23,7 @@ export default (state = {
             return {
                 ...state,
                 posts: action.data['hydra:member'],
+                pageCount: pageCount(action.data),
                 isFetching: false
             };
         case BLOG_POST_LIST_ERROR:

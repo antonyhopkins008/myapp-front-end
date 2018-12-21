@@ -35,6 +35,18 @@ class BlogPostListContainer extends React.Component {
         return Number(this.props.match.params.page) || 1;
     }
 
+    onNextPageClick(e) {
+        const {currentPage, pageCount} = this.props;
+        const newPage = Math.min(currentPage + 1, pageCount);
+        this.changePage(newPage);
+    }
+
+    onPreviousPageClick(e) {
+        const {currentPage} = this.props;
+        const newPage = Math.max(currentPage - 1, 1);
+        this.changePage(newPage);
+    }
+
     changePage(page) {
         const {history, blogPostListSetPage} = this.props;
         blogPostListSetPage(page);
@@ -42,7 +54,8 @@ class BlogPostListContainer extends React.Component {
     }
 
     render() {
-        const {posts, isFetching, currentPage} = this.props;
+        const {posts, isFetching, currentPage, pageCount} = this.props;
+
         if (isFetching) {
             return (<Spinner/>);
         }
@@ -50,7 +63,11 @@ class BlogPostListContainer extends React.Component {
         return (
             <div>
                 <BlogPostList posts={posts}/>
-                <Paginator currentPage={currentPage} pageCount={10} setPage={this.changePage.bind(this)}/>
+                <Paginator currentPage={currentPage} pageCount={pageCount}
+                           setPage={this.changePage.bind(this)}
+                           nextPage={this.onNextPageClick.bind(this)}
+                           prevPage={this.onPreviousPageClick.bind(this)}
+                />
             </div>);
     }
 }
