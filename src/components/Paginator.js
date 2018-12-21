@@ -13,7 +13,7 @@ export class Paginator extends React.Component {
 
     }
     render() {
-        const {currentPage} = this.props;
+        const {currentPage, setPage} = this.props;
         return (
             <nav>
                 <ul className="pagination">
@@ -24,9 +24,13 @@ export class Paginator extends React.Component {
                     </li>
                     {
                         this.range.map(page => {
+                            const onClick = e => {
+                                e.preventDefault();
+                                setPage(page)
+                            };
                             return (
                                 <li key={page} className={classNames('page-item', {active: currentPage === page})}>
-                                    <button className="page-link">
+                                    <button className="page-link" onClick={onClick}>
                                         {page}
                                     </button>
                                 </li>
