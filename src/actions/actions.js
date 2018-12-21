@@ -170,6 +170,16 @@ export const userLoginAttempt = (username, password) => {
     }
 };
 
+export const userRegister = (username, password, retypedPassword, email, name) => {
+    return (dispatch) => {
+        return requests
+            .post('/users', {username, password, retypedPassword, email, name}, false)
+            .catch(error => {
+                throw new SubmissionError(parseApiErrors(error.response));
+            });
+    }
+};
+
 export const userSetId = (userId) => {
     return {
         type: USER_SET_ID,
