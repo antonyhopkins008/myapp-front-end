@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import Spinner from "./Spinner";
 import CommentList from "./CommentList";
 import CommentForm from "./CommentForm";
+import {LoadMore} from "./LoadMore";
 
 const mapStateToProps = state => ({
     ...state.commentList,
@@ -24,16 +25,28 @@ class CommentListContainer extends React.Component {
         this.props.commentListUnload();
     }
 
-    render() {
-        const {comments, isFetching, isAuthenticated, blogPostId} = this.props;
+    onLoadMoreClick(){
+        const {blogPostId, currentPage, commentListFetch} = this.props;
+        console.log('clcikc');
+        commentListFetch(blogPostId, currentPage);
+    }
 
-        if (isFetching) {
+    render() {
+        const {comments, isFetching, isAuthenticated, blogPostId, currentPage, pageCount} = this.props;
+
+        const showLoadMore = currentPage > 1 && currentPage <= pageCount;
+
+        if (isFetching && currentPage === 1) {
             return (<Spinner/>);
         }
 
         return (
             <div>
                 <CommentList comments={comments}/>
+                {showLoadMore && <LoadMore label="Load more comments"
+                                           onClick={this.onLoadMoreClick.bind(this)}
+                                           disabled={isFetching}
+                />}
                 {isAuthenticated && <CommentForm blogPostId={blogPostId}/>}
             </div>
         );

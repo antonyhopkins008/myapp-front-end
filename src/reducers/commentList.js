@@ -5,10 +5,13 @@ import {
     COMMENT_LIST_REQUEST,
     COMMENT_LIST_UNLOAD
 } from "../actions/constants";
+import {pageCount} from "../apiUtils";
 
 export default (state = {
     comments: null,
-    isFetching: false
+    isFetching: false,
+    currentPage: 1,
+    pageCount: null
 }, action) => {
     switch (action.type) {
         case COMMENT_LIST_REQUEST:
@@ -19,8 +22,11 @@ export default (state = {
         case COMMENT_LIST_RECEIVE:
             return {
                 ...state,
-                comments: action.data['hydra:member'],
-                isFetching: false
+                comments: !state.comments ? action.data['hydra:member']
+                    : state.comments.concat(action.data['hydra:member']),
+                isFetching: false,
+                currentPage: state.currentPage + 1,
+                pageCount: pageCount(action.data)
             };
         case COMMENT_ADDED:
             return {
@@ -31,7 +37,9 @@ export default (state = {
             return {
                 ...state,
                 comments: null,
-                isFetching: false
+                isFetching: false,
+                currentPage: 1,
+                pageCount: null
             };
         default:
             return state
