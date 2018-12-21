@@ -3,6 +3,7 @@ import BlogPostList from "./BlogPostList";
 import {blogPostListFetch} from "../actions/actions";
 import {connect} from "react-redux";
 import Spinner from "./Spinner";
+import {Paginator} from "./Paginator";
 
 const mapStateToProps = state => ({
     ...state.blogPostList
@@ -24,8 +25,10 @@ class BlogPostListContainer extends React.Component {
         }
 
         return (
-            <BlogPostList posts={posts}/>
-        );
+            <div>
+                <BlogPostList posts={posts}/>
+                <Paginator currentPage={1} pageCount={10}/>
+            </div>);
     }
 }
 
