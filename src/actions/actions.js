@@ -16,7 +16,7 @@ import {
     USER_LOGIN_SUCCESS, USER_LOGOUT,
     USER_PROFILE_ERROR,
     USER_PROFILE_RECEIVED,
-    USER_PROFILE_REQUEST,
+    USER_PROFILE_REQUEST, USER_REGISTRATION_SUCCESS,
     USER_SET_ID,
 } from "./constants";
 import {SubmissionError} from "redux-form";
@@ -149,6 +149,12 @@ export const userLogout = () => {
     }
 };
 
+export const userRegistrationSuccess = () => {
+    return {
+        type: USER_REGISTRATION_SUCCESS
+    }
+};
+
 export const userLoginSuccess = (token, userId) => {
     return {
         type: USER_LOGIN_SUCCESS,
@@ -174,6 +180,7 @@ export const userRegister = (username, password, retypedPassword, email, name) =
     return (dispatch) => {
         return requests
             .post('/users', {username, password, retypedPassword, email, name}, false)
+            .then(() => dispatch(userRegistrationSuccess()))
             .catch(error => {
                 throw new SubmissionError(parseApiErrors(error.response));
             });
