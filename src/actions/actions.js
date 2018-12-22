@@ -14,6 +14,9 @@ import {
     COMMENT_LIST_RECEIVE,
     COMMENT_LIST_REQUEST,
     COMMENT_LIST_UNLOAD,
+    IMAGE_UPLOAD_ERROR,
+    IMAGE_UPLOAD_REQUEST,
+    IMAGE_UPLOADED,
     USER_CONFIRMATION_SUCCESS,
     USER_LOGIN_SUCCESS,
     USER_LOGOUT,
@@ -275,5 +278,35 @@ export const userProfileFetch = (userId) => {
             .get(`/users/${userId}`, true)
             .then(response => dispatch(userProfileReceived(userId, response)))
             .catch(error => dispatch(userProfileError(userId)))
+    }
+};
+
+export const imageUploaded = (file) => {
+    return {
+        type: IMAGE_UPLOADED,
+        image: file
+    }
+};
+
+export const imageUploadError = () => {
+    return {
+        type: IMAGE_UPLOAD_ERROR,
+    }
+};
+
+export const imageUploadRequest = () => {
+    return {
+        type: IMAGE_UPLOAD_REQUEST,
+    }
+};
+
+export const imageUpload = (file) => {
+    return (dispatch) => {
+        dispatch(imageUploadRequest());
+        return requests
+            .upload('/images', file)
+            .then(response => dispatch(imageUploaded(response)))
+            .catch(error => dispatch(imageUploadError));
+
     }
 };
