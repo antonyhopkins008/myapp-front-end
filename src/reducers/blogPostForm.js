@@ -1,5 +1,5 @@
 import {
-    BLOG_POST_IMAGE_UNLOAD,
+    BLOG_POST_IMAGE_UNLOAD, IMAGE_DELETE_REQUEST,
     IMAGE_DELETED,
     IMAGE_UPLOAD_ERROR,
     IMAGE_UPLOAD_REQUEST,
@@ -14,6 +14,7 @@ export default (
 ) => {
     switch (action.type) {
         case IMAGE_UPLOAD_REQUEST:
+        case IMAGE_DELETE_REQUEST:
             return {
                 ...state,
                 isImageUploading: true
@@ -33,7 +34,8 @@ export default (
         case IMAGE_DELETED:
             return {
                 ...state,
-                images: state.images.filter(image => image.id !== action.imageId)
+                images: state.images.filter(image => image.id !== action.imageId),
+                isImageUploading: false
             };
         case BLOG_POST_IMAGE_UNLOAD:
             return {

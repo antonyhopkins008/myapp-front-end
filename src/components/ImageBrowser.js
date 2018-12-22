@@ -2,13 +2,14 @@ import React from 'react'
 
 export default class ImageBrowser extends React.Component {
     render() {
-        const {images, deleteHandler} = this.props;
+        const {images, deleteHandler, isLocked} = this.props;
         return (
             <div className="row mt-4 mb-4">
                 {
                     images.map(image => {
                         const onImageDeleteClick = (event) => {
                             event.preventDefault();
+                            console.log('deleting...')
                             deleteHandler(image.id)
                         };
                         return (
@@ -20,6 +21,7 @@ export default class ImageBrowser extends React.Component {
                                     <button type="button"
                                             className="btn btn-outline-danger"
                                             onClick={onImageDeleteClick}
+                                            disabled={isLocked}
                                     >Remove</button>
                                 </div>
                             </div>

@@ -50,7 +50,10 @@ class BlogPostForm extends React.Component {
                         <Field name="title" label="Title" type="text" component={renderField}/>
                         <Field name="content" label="Content" type="textarea" component={renderField}/>
                         <ImageUpload/>
-                        <ImageBrowser images={images} deleteHandler={imageDelete}/>
+                        <ImageBrowser images={images}
+                                      deleteHandler={imageDelete}
+                                      isLocked={isImageUploading}
+                        />
                         <button type="submit" className="btn btn-primary btn-big btn-block"
                                 disabled={submitting || isImageUploading}>
                             Publish
