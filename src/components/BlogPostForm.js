@@ -4,7 +4,7 @@ import {canWriteBlogPost} from "../apiUtils";
 import {Redirect} from "react-router";
 import {renderField} from "../form";
 import {connect} from "react-redux";
-import {blogPostAdd} from "../actions/actions";
+import {blogPostAdd, blogPostImageUnload} from "../actions/actions";
 import ImageUpload from "./ImageUpload";
 import ImageBrowser from "./ImageBrowser";
 
@@ -15,17 +15,22 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     blogPostAdd,
+    blogPostImageUnload
 };
 
 class BlogPostForm extends React.Component {
     onSubmit(values) {
-        const {blogPostAdd, reset, history} = this.props;
+        const {blogPostAdd, reset, history, images} = this.props;
 
-        return blogPostAdd(values.title, values.content)
+        return blogPostAdd(values.title, values.content, images)
             .then(() => {
                 reset();
                 history.push('/');
             });
+    }
+
+    componentWillUnmount() {
+        this.props.blogPostImageUnload();
     }
 
     render() {
