@@ -6,9 +6,11 @@ import {renderField} from "../form";
 import {connect} from "react-redux";
 import {blogPostAdd} from "../actions/actions";
 import ImageUpload from "./ImageUpload";
+import ImageBrowser from "./ImageBrowser";
 
 const mapStateToProps = (state) => ({
-    userData: state.auth.userData
+    userData: state.auth.userData,
+    ...state.blogPostForm
 });
 
 const mapDispatchToProps = {
@@ -32,7 +34,7 @@ class BlogPostForm extends React.Component {
             return <Redirect to="/login"/>
         }
 
-        const {submitting, handleSubmit, error} = this.props;
+        const {submitting, handleSubmit, error, images, isImageUploading} = this.props;
 
         return (
             <div className="card mt-3 md-6 shadow-sm">
@@ -42,8 +44,9 @@ class BlogPostForm extends React.Component {
                         <Field name="title" label="Title" type="text" component={renderField}/>
                         <Field name="content" label="Content" type="textarea" component={renderField}/>
                         <ImageUpload/>
+                        <ImageBrowser images={images}/>
                         <button type="submit" className="btn btn-primary btn-big btn-block"
-                                disabled={submitting}>
+                                disabled={submitting || isImageUploading}>
                             Publish
                         </button>
                     </form>
