@@ -92,6 +92,29 @@ export const blogPostFetch = (id) => {
     }
 };
 
+export const blogPostAdd = (title, content) => {
+    return (dispatch) => {
+        return requests
+            .post(
+                '/blog_posts',
+                {
+                    title,
+                    content,
+                    slug: title && title.replace(/ /g, '-').toLowerCase()
+                }
+            ).catch(error => {
+                if (401 === error.response.status) {
+                    return dispatch(userLogout());
+                } else if (403 === error.response.status) {
+                    throw new SubmissionError({
+                        _error: 'You do not have rights to publish new blog post'
+                    })
+                }
+                throw new SubmissionError(parseApiErrors(error.response))
+            })
+    }
+};
+
 /**
  * Blog post comment
  */
